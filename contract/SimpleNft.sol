@@ -1,17 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-// Amended by HashLips
-/**
-    !Disclaimer!
-    These contracts have been used to create tutorials,
-    and was created for the purpose to teach people
-    how to create smart contracts on the blockchain.
-    please review this code on your own before using any of
-    the following code for production.
-    HashLips will not be liable in any way if for the use 
-    of the code. That being said, the code has been tested 
-    to the best of the developers' knowledge to work as intended.
-*/
+// Thanks to HashLips amended by Astra
 
 pragma solidity >=0.7.0 <0.9.0;
 
@@ -23,9 +12,8 @@ contract NFT is ERC721Enumerable, Ownable {
 
   string baseURI;
   string public baseExtension = ".json";
-  uint256 public cost = 0.05 ether;
+  uint256 public cost = 0.03 ether;
   uint256 public maxSupply = 10000;
-  uint256 public maxMintAmount = 20;
   bool public paused = false;
   bool public revealed = false;
   string public notRevealedUri;
@@ -50,7 +38,6 @@ contract NFT is ERC721Enumerable, Ownable {
     uint256 supply = totalSupply();
     require(!paused);
     require(_mintAmount > 0);
-    require(_mintAmount <= maxMintAmount);
     require(supply + _mintAmount <= maxSupply);
 
     if (msg.sender != owner()) {
@@ -106,10 +93,6 @@ contract NFT is ERC721Enumerable, Ownable {
     cost = _newCost;
   }
 
-  function setmaxMintAmount(uint256 _newmaxMintAmount) public onlyOwner {
-    maxMintAmount = _newmaxMintAmount;
-  }
-  
   function setNotRevealedURI(string memory _notRevealedURI) public onlyOwner {
     notRevealedUri = _notRevealedURI;
   }
@@ -130,7 +113,7 @@ contract NFT is ERC721Enumerable, Ownable {
     // This will pay HashLips 5% of the initial sale.
     // You can remove this if you want, or keep it in to support HashLips and his channel.
     // =============================================================================
-    (bool hs, ) = payable(0x943590A42C27D08e3744202c4Ae5eD55c2dE240D).call{value: address(this).balance * 5 / 100}("");
+    (bool hs, ) = payable(0xE62FCe0290C3c54B6F65a46723416E1A687f5539).call{value: address(this).balance * 5 / 100}("");
     require(hs);
     // =============================================================================
     
